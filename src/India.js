@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, ScrollView, StyleSheet,Button,Pressable } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 import { formatDistance } from 'date-fns'
 import { Dimensions } from 'react-native';
+import Cards from './Cards'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-import Modal, { ModalContent, SlideAnimation } from 'react-native-modals'
-
 export default function Home() {
     const [loaded, setLoaded] = useState(false)
     const [err, setErr] = useState('')
     const [total, setTotal] = useState({})
     const [tested, setTested] = useState({})
     const [statesData, setStatesData] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
     useEffect(() => {
         fetch('https://api.covid19india.org/data.json')
             .then(response => response.json())
@@ -58,11 +55,6 @@ export default function Home() {
         console.log("suman")
         console.log(temp[index].visible )
     }
-const onPressLearnMore =(props)=>{
-             <Item1 item={props}/>
-             console.log("hii")
-             console.log(props.district)
-}
     if(err) {
         return (
             <View style={{flex : 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -79,14 +71,39 @@ const onPressLearnMore =(props)=>{
     }
     else {
         return (
-            <ScrollView>
+            <View style={{backgroundColor:"#1c2732"}}>
                     <View>
                         <Text style={styles.tests}>{tested.totalindividualstested} TESTED AS OF {tested.updatetimestamp.slice(0,10)}</Text>
                         <Text style={styles.updated}>
                             { isNaN(Date.parse(formatDate(total.lastupdatedtime))) ? '' : 'Last Updated '+formatDistance(new Date(formatDate(total.lastupdatedtime)), new Date()) + ' Ago'}
                         </Text>
                     </View>
-
+                    <Text style={styles.covidHeading}>COVID19 India</Text>
+                    <View>
+                    <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={{ marginTop: 30,marginBottom:10}}
+                >
+                    <Cards
+                        title="Total Cases"
+                        bg="#FFF"
+                        number={total ? total.confirmed : 0}
+                    />
+                    <Cards
+                        title="Recovered"
+                        bg="#D93B4A"
+                        number={total ? total.recovered : 0}
+                    />
+                    <Cards
+                        title="Death Reported"
+                        bg="#FFF"
+                        number={total? total.deaths : 0}
+                    />
+                </ScrollView>
+                </View>
+                <Text style={styles.covidHeading}>COVID19 States</Text>
+                <ScrollView>
                     <View style={{ marginTop: 10, paddingTop: 10, marginBottom: 20}}>
                       
                         {
@@ -133,6 +150,7 @@ const onPressLearnMore =(props)=>{
                     </View>
               
             </ScrollView>
+            </View>
         )
     }
 }
@@ -152,6 +170,13 @@ const styles = StyleSheet.create({
         margin: 10,
         elevation: 7
     },
+    covidHeading: {
+        color: '#FFF',
+        fontSize: 20,
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        marginTop: 10
+    },
     cardContainer : {
         flexDirection: 'row',
         height: 110,
@@ -163,6 +188,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Teko-Regular',
         textAlign: 'center',
         fontSize: 16
+    },
+     cards: {
+      
+        marginTop: -150
     },
     cardNumber : {
         color: 'white',
@@ -183,7 +212,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         opacity: 0.5,
         fontSize: 20,
-        marginTop: 10
+        marginTop: 20,
+        color:"white"
     },
     tableHead : {
         fontFamily : 'Teko-Bold',
@@ -229,12 +259,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 5
     },
-    flag: {
-        height: 30,
-        width: 40,
-        padding: 10, 
-        borderRadius: 1000
-    },
     card:{
         backgroundColor:'white',
         width:windowWidth-50,
@@ -252,40 +276,5 @@ const styles = StyleSheet.create({
             justifyContent: "center",
             alignItems: "center",
             marginTop: 22
-          },
-          modalView: {
-            margin: 20,
-            backgroundColor: "white",
-            borderRadius: 20,
-            padding: 35,
-            alignItems: "center",
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
-            elevation: 5
-          },
-          button: {
-            borderRadius: 20,
-            padding: 10,
-            elevation: 2
-          },
-          buttonOpen: {
-            backgroundColor: "#F194FF",
-          },
-          buttonClose: {
-            backgroundColor: "#2196F3",
-          },
-          textStyle: {
-            color: "white",
-            fontWeight: "bold",
-            textAlign: "center"
-          },
-          modalText: {
-            marginBottom: 15,
-            textAlign: "center"
-          }
+          },    
 })

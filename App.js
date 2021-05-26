@@ -7,7 +7,6 @@ import India from './src/India'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ModalPortal } from 'react-native-modals';
 import graph from './src/graph'
-
 const Tab = createMaterialTopTabNavigator();
 
 function MyTabs() {
@@ -43,7 +42,7 @@ const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    
+
     <NavigationContainer>
 <ModalPortal/>
       <Tab.Navigator initialRouteName="Home">

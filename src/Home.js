@@ -29,16 +29,36 @@ const [fullData, setFullData] = useState([]);
   
     return (
         <View style={styles.container}>
-        <Text style={styles.covidHeading}>COVID19 DASHBOARD</Text>
-      
-         
-           
+        <Text style={styles.covidHeading}>COVID19 World</Text>
+        <View style={styles.cards}>
+        <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{ marginTop: 170 }}
+        >
+            <Cards
+                title="Total Cases"
+                bg="#FFF"
+                number={data ? data.Global.TotalConfirmed : 0}
+            />
+            <Cards
+                title="Recovered"
+                bg="#D93B4A"
+                number={data ? data.Global.TotalRecovered : 0}
+            />
+            <Cards
+                title="Death Reported"
+                bg="#FFF"
+                number={data ? data.Global.TotalDeaths : 0}
+            />
+        </ScrollView>
+    </View>  
+    <Text style={styles.covidHeading}>COVID19 Region</Text>
         <View style={styles.flatList} >
         <FlatList 
             data={data && data.Countries ?  data.Countries : 0}
             renderItem={({item})=> <ItemRows item={item}
-            keyExtractor={item => item.id}/>} 
-           
+            keyExtractor={item => item.id}/>}  
         />
     </View>
         </View>
@@ -56,11 +76,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignSelf: 'center',
         fontWeight: 'bold',
-        marginTop: 50
+        marginTop: 20
     },
     cards: {
       
-        marginTop: -90
+        marginTop: -150
     },
     casesHeading:{
         color: '#FFF',

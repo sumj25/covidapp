@@ -4,9 +4,6 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import Icon from 'react-native-ionicons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
 export default class Cards extends Component {
     render() {
         return (
@@ -15,11 +12,6 @@ export default class Cards extends Component {
                 backgroundColor: this.props.bg
             }}>
                 <View style={styles.col}>
-                    <Icon
-                        name={this.props.icon}
-                        size={30}
-                        color={this.props.bg == "#D93B4A" ? "#fff" : "red"}
-                    />
                 </View>
                 <Text style={styles.title}>{this.props.title}</Text>
                 <Text styles={{
@@ -36,7 +28,7 @@ export default class Cards extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 130,
+        height: 100,
         width: 130,
         borderRadius: 30,
         padding: 15,
